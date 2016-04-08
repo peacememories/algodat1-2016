@@ -186,8 +186,8 @@ aufweist, wenn seine Worst-Case-Laufzeit in $$O(n^2)$$ liegt?
 
 1. $$f_1(n) = \Theta(4^n)$$
 2. $$f_2(n) = \Theta(n*log(n))$$
-3. $$f_3(n) = \Theta(log(n)^10)$$
-4. $$f_4(n) = n^100$$
+3. $$f_3(n) = \Theta(log(n)^{10})$$
+4. $$f_4(n) = \Theta(n^{100})$$
 
 # 7:
 
