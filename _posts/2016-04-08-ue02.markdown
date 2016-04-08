@@ -1,0 +1,378 @@
+---
+layout: post
+title:  "UE 02"
+date:   2016-04-08 12:21:00 +0200
+categories: ue
+---
+
+# Inhalt
+
+* TOC
+{:toc}
+
+# 9: Sorting Arrays
+
+Sortieren Sie das Array $$ A = (17, 24, 13, 5, 9) $$ jeweils mittels Selection-Sort und Insertion-Sort entsprechend den Algorithmen aus der Vorlesung. Stellen Sie die einzelnen Zwischenschritte, die die Algorithmen ausführen, dar. Es genügt das Array nach jeder Iteration der äußersten Schleife abzubilden. Wie viele Vergleichsoperationen führt jeder der Algorithmen durch?
+
+---
+
+## Selection Sort
+
+1. $$ A = (17, 24, 13, 5, 9) $$
+
+   1. Compare: $$ ((17,24),(17,13),(13,5),(5,9)) $$
+   2. Swap $$ (17, 5) $$
+
+2. $$ A = (5, 24, 13, 17, 9) $$
+
+   1. Compare: $$ ((24, 13),(13, 17),(13, 9)) $$
+   2. Swap $$ (24, 9) $$
+
+3. $$ A = (5, 9, 13, 17, 24) $$
+
+   1. Compare: $$ ((13, 17), (13, 24)) $$
+
+4. $$ A = (5, 9, 13, 17, 24) $$
+
+   1. Compare: $$ (17, 24) $$
+
+5. $$ A = (5, 9, 13, 17, 24) $$
+
+*10 Vergleiche*
+
+## Insertion Sort
+
+1. $$ A = (17, 24, 13, 5, 9) $$
+
+   1. Compare: $$ (24, 17) $$
+
+2. $$ A = (17, 24, 13, 5, 9) $$
+
+   1. Compare: $$ ((13, 24),(13, 17)) $$
+
+3. $$ A = (13, 17, 24, 5, 9) $$
+
+   1. Compare: $$ ((5, 24), (5, 17), (5, 13)) $$
+
+4. $$ A = (5, 13, 17, 24, 9) $$
+
+   1. Compare: $$ ((9, 24), (9, 17), (9, 13), (9, 5)) $$
+
+5. $$ A = (5, 9, 13, 17, 24) $$
+
+*10 Vergleiche*
+
+# 10: Graphensuche
+
+Führen Sie auf nachfolgendem Graphen Breiten- und Tiefensuche entsprechend den Algorithmen aus den Vorlesungsfolien durch.
+Geben Sie dabei jeweils die Reihenfolge an, in der die Knoten besucht werden. Verwenden Sie jeweils $$ A $$ als Startknoten.
+
+(Für die Abgabe genügt es, eine entsprechend gereihte Liste der Knoten anzugeben.)
+
+---
+
+## Breitensuche
+
+1. $$ (\underline{A}) $$
+
+2. $$ (A, \underline{B}, \underline{D}, \underline{I}) $$
+
+3. $$ (A, B, D, I, \underline{C}, \underline{E}, \underline{G}, \underline{J}) $$
+
+4. $$ (A, B, D, I, C, E, G, \underline{F}, \underline{H}) $$
+
+## Tiefensuche
+
+1. $$ (\underline{A}) $$
+
+2. $$ (A, \underline{B}) $$
+
+3. $$ (A, B, \underline{C}) $$
+
+4. $$ (A, B, C, \underline{E}) $$
+
+5. $$ (A, B, C, E, \underline{D}) $$
+
+6. $$ (A, B, C, E, D, \underline{G}) $$
+
+7. $$ (A, B, C, E, D, G, \underline{H}) $$
+
+8. $$ (A, B, C, E, D, G, H, \underline{F}) $$
+
+   Continue from $$ H $$
+
+9. $$ (A, B, C, E, D, G, H, F, \underline{J}) $$
+
+10. $$ (A, B, C, E, D, G, H, F, J, \underline{I}) $$
+
+# 11: Topologische Sortierung
+
+Bestimmen Sie für nachfolgenden gerichteten Graphen eine topologische
+Sortierung unter Verwendung des entsprechenden Algorithmus aus den Vorlesungsfolien.
+
+---
+
+| sorted                               | inDegree                                                             | $$ Q $$        |
+|--------------------------------------|----------------------------------------------------------------------|----------------|
+| $$ () $$                             | $$ (0, 1, 2, 2, 2, 4, 3, 0, 1, 2) $$ | $$ \{A, H\} $$ |
+| $$ (A) $$                            | $$ (0, 0, 2, 1, 2, 4, 3, 0, 1, 2) $$ | $$ \{B, H\} $$ |
+| $$ (A, B) $$                         | $$ (0, 0, 1, 0, 1, 4, 3, 0, 1, 2) $$ | $$ \{D, H\} $$ |
+| $$ (A, B, D) $$                      | $$ (0, 0, 1, 0, 0, 4, 2, 0, 1, 2) $$ | $$ \{E, H\} $$ |
+| $$ (A, B, D, E) $$                   | $$ (0, 0, 0, 0, 0, 3, 1, 0, 1, 2) $$ | $$ \{C, H\} $$ |
+| $$ (A, B, D, E, C) $$                | $$ (0, 0, 0, 0, 0, 2, 1, 0, 1, 2) $$ | $$ \{H\} $$    |
+| $$ (A, B, D, E, C, H) $$             | $$ (0, 0, 0, 0, 0, 1, 0, 0, 1, 1) $$ | $$ \{G\} $$    |
+| $$ (A, B, D, E, C, H, G) $$          | $$ (0, 0, 0, 0, 0, 0, 0, 0, 0, 1) $$ | $$ \{F, I\} $$ |
+| $$ (A, B, D, E, C, H, G, F) $$       | $$ (0, 0, 0, 0, 0, 0, 0, 0, 0, 1) $$ | $$ \{I\} $$    |
+| $$ (A, B, D, E, C, H, G, F, I) $$    | $$ (0, 0, 0, 0, 0, 0, 0, 0, 0, 0) $$ | $$ \{J\} $$    |
+| $$ (A, B, D, E, C, H, G, F, I, J) $$ | $$ (0, 0, 0, 0, 0, 0, 0, 0, 0, 0) $$ | $$ \{\} $$     |
+
+# 12: Zusammenhangskomponenten
+
+Gegeben sei ein schlichter ungerichteter Graph $$ G = (V, E) $$.
+Finden Sie einen Algorithmus, der in linearer Laufzeit bestimmt, ob jede Zusammenhangskomponente von G aus einer geraden Anzahl an Knoten besteht.
+Entwickeln Sie eine Lösung in detailliertem Pseudocode und argumentieren Sie, dass der Algorithmus korrekt ist und
+die geforderte Laufzeitschranke gilt.
+
+---
+
+Angelehnt an Tarjan
+
+```
+Eingabe: Graph G = (V, E)
+
+U := V
+S := {}
+while ( exists v0 in U ) do
+  S := {}
+  depthsearch(v0)
+  if |S| mod 2 != 0
+    return false
+  end if
+end while
+return true
+
+procedure depthsearch(v)
+S.push(v)
+U := U \ {v}
+forall(v, v') in E do
+  if(v' in U)
+    depthsearch(v')
+  end if
+end for
+```
+
+# 13: Adjazenz
+
+Ermitteln Sie eine Darstellung des Graphen aus Aufgabe 10 als Adjazenzmatrix und als Adjazenzlisten.
+
+---
+
+## Adjazenzmatrix
+
+$$
+A = \begin{pmatrix}
+  0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+  1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 \\
+  1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+  0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+  0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+  0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+  0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 1 \\
+  1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0
+\end{pmatrix}
+$$
+
+## Adjazenzliste
+
+$$
+\begin{aligned}
+A &= \{A, D, I\} \\
+B &= \{A, C, D, E\} \\
+C &= \{B, E, F\} \\
+D &= \{A, B, E, G\} \\
+E &= \{B, C, D, F, G, H\} \\
+F &= \{C, E, H\} \\
+G &= \{D, E, H, I, J\} \\
+H &= \{E, F, G, J\} \\
+I &= \{A, G, J\} \\
+J &= \{G, H, I\}
+\end{aligned}
+$$
+
+# 14: Kreis der Länge 3
+
+Für einen schlichten ungerichteten Graphen $$ G = (V, E) $$ soll bestimmt werden, ob er einen Kreis der Länge 3 enthält.
+
+* Überlegen Sie sich zuerst, wie das mit einem sehr einfachen Algorithmus in Zeit $$ O(n^3) $$ durchgeführt werden kann. Eine grobe Skizze der Idee und die Argumentation der Korrektheit sowie der Laufzeitschranke sind hier ausreichend.
+
+* Finden Sie nun einen besseren Algorithmus zur Lösung des Problems, dessen Laufzeit in $$ O(n * m) $$ liegt. Sie können annehmen, dass $$ n \leq m $$ gilt. Entwickeln Sie eine Lösung in detailliertem Pseudocode und argumentieren Sie, dass der Algorithmus korrekt ist und die geforderte Laufzeitschranke gilt.
+
+Hinweis: Die angegebene Laufzeitschranke lässt es zu, zwischen der Darstellung als Adjazenzmatrix bzw. -listen zu transformieren.
+
+---
+
+## Simpler Algorithmus
+
+```
+Eingabe: Graph G = (V, E)
+
+for each (v in V) do
+  for each (v, v') in E do
+    for each (v', v'') in E do
+      if (v, v'') in E
+        return true
+      end if
+    end for
+  end for
+end for
+
+return false
+```
+
+### Laufzeitanalyse
+
+$$
+\begin{aligned}
+n &:= \text{Anzahl der Knoten} \\
+g &:= \text{Maximaler Knotengrad} \\
+\end{aligned}
+$$
+
+$$ | \{ (v, v') | v \in V; \forall (v, v') \in E \} | \leq g $$
+
+Laufzeitschranke ist $$ O(n * g^2) $$. Da $$ g < n $$ also auch $$ O(n^3) $$
+
+## $$ O(n*m) Algorithmus $$
+
+```
+Eingabe: Graph G = (V, E)
+
+for each (v, v') in E do
+  for each v'' in V do
+    if (v'', v) in E and (v'', v') in E
+      return true
+    end if
+  end for
+end for
+return false
+```
+
+### Laufzeitanalyse
+
+Zwei verschachtelte Schleifen mit den Laufzeiten:
+
+* $$ O(|\{ (v, v') | \forall (v, v') \in E \}|) = O(m) $$
+
+* $$ O(| \{ v | \forall v \in V \} |) = O(n) $$
+
+Also: $$ O(m*n) $$
+
+# 15: Graph Reversieren
+
+Wir haben in der Vorlesung den gerichteten Graphen $$ G^\text{rev} $$ kennengelernt. Bezogen auf einen gerichteten Ausgangsgraphen $$ G = (V, E) $$ ist die Menge der Kanten von $$ G^\text{rev} = (V, E^\text{rev}) $$ durch $$ E^\text{rev} = \{(u, v) | \forall (v, u) \in E\} $$ gegeben. Finden Sie einen Algorithmus mit linearer Laufzeitgarantie, um für einen gerichteten Graphen G sein Gegenstück $$ G^\text{rev} $$ zu erzeugen.
+Verwenden Sie zur Repräsentation Adjazenzlisten.
+Entwickeln Sie eine Lösung in detailliertem Pseudocode und argumentieren Sie, dass der Algorithmus korrekt ist und die geforderte Laufzeitschranke gilt.
+
+---
+
+## Algorithmus
+
+```
+Eingabe: Graph G = (V, adj)
+
+adj_rev := map()
+for each v in V do
+  adj_rev[v] = {}
+end for
+
+for each v in V do
+  for each v' in adj[v] do
+    adj_rev[v'].push(v)
+  end for
+end for
+```
+
+## Laufzeitanalyse
+
+Die korrekte Laufzeit des Algorithmus ist
+$$ O(\sum_{v}^{V}|\text{adj}(v)| ) $$. Da in einem gerichteten Graph
+$$ \sum_{v}^{V}|\text{adj}(k)| = m $$, ist die Laufzeitschranke des Algorithmus $$ O(m) $$.
+
+# 16: Zusammenhängender gerichteter Graph
+
+Das Wiener Verkehrsmanagement plant alle Straßen in Einbahnen umzuwandeln.
+Es wird behauptet, dass es im neuen Straßennetz immer noch möglich ist, von
+jeder beliebigen Kreuzung jede andere Kreuzung zu erreichen.
+Die Gegner dieser Neuerung sind jedoch nicht überzeugt.
+Nun wird ein Algorithmus benötigt, um die Korrektheit der Aussage zu prüfen.
+Da die Änderungen schon bald in Kraft treten sollen, ist nur mehr wenig Zeit verfügbar und deshalb nur ein Algorithmus mit linearer Laufzeitgarantie anwendbar.
+
+* Formulieren Sie das beschriebene Problem unter Verwendung von Graphen und erklären Sie, wie es in linearer Laufzeit gelöst werden kann.
+
+* Nehmen Sie nun an, dass sich die ursprüngliche Behauptung als Irrtum herausgestellt hat. Stattdessen soll nun überprüft werden, ob die schwächere Behauptung, dass man von jeder Kreuzung die vom Rathaus erreicht werden kann, auch wieder zum Rathaus zurückkehren kann, gilt.
+Zeigen Sie, dass dies ebenfalls in linearer Laufzeit möglich ist.
+
+(Eine verbale Beschreibung mit stichhaltiger Argumentation der Korrektheit und der Laufzeitschranke ist jeweils ausreichend. Sie dürfen Algorithmen und Resultate aus den Vorlesungsfolien benutzen.)
+
+---
+
+## Starker Zusammenhang
+
+Gegeben sei ein gerichteter Graph $$ G = (V, E) $$. Es soll festgestellt werden, ob dieser Graph stark zusammenhängend ist.
+
+Angelehnt an Tarjan kann dies erreicht werden, indem überprüft wird, ob der Graph genau eine Zusammenhangskomponente besitzt.
+
+```
+Eingabe: Graph G = (V, E)
+
+numcc := 0
+maxdfs := 0
+U := V
+S := {}
+while v0 in U do
+  tarjan(v0)
+end while
+
+return numcc == 1
+
+procedure tarjan(v)
+v.dfs := maxdfs
+v.lowlink := maxdfs
+maxdfs := maxdfs + 1
+S.push(v)
+U := U \ {v}
+for each (v, v') in E do
+  if v' in U
+    tarjan(v')
+    v.lowlink := min(v.lowlink, v'.lowlink)
+  else if v' in S
+    v.lowlink := min(v.lowlink, v'.dfs)
+  end if
+end for
+if v.lowlink == v.dfs
+  numcc := numcc + 1
+  repeat
+    v' := s.pop
+  until (v' = v)
+end if
+```
+
+### Laufzeitanalyse
+
+Da Tarjan jeden Knoten nur einmal, und jede Kante maximal zwei mal betrachtet, ist die Laufzeit des Algorithmus mit $$ O(m + n) $$ linear.
+
+## Schwacher Zusammenhang mit Rathaus
+
+Alternativ soll überprüft werden, ob für jeden Pfad von Rathaus nach $$ B $$ auch einen Pfad von $$ B $$ nach Rathaus existiert.
+
+Dazu wird eine Breitensuche mit Ausgangspunkt Rathaus angestellt, und die Menge der Blätter des erzeugten Baumes in $$ X $$ gespeichert.
+
+Eine Menge $$ Y $$ wird durch die selbe Prozedur angewendet auf den reversierten Graphen erzeugt.
+
+Danach wird überprüft, ob jeder Knoten $$ v \in X $$ in $$ Y $$ enthalten ist.
+
+### Laufzeitanalyse
+
+Eine Breitensuche hat Laufzeit $$ O(n) $$. Die Laufzeit dieses Algorithmus ist also $$ O(2n) = O(n) $$
