@@ -1,0 +1,308 @@
+---
+layout: post
+title:  "UE 04"
+date:   2016-05-06 19:12:00 +0200
+categories: ue
+---
+
+# Inhalt
+
+* TOC
+{:toc}
+
+# 29: Binary Tree Weights
+
+Schreiben Sie einen rekursiven Algorithmus (in Pseudocode), welcher für einen binären Baum alle inneren Knoten mit ihren Gewichten ausgibt. Das Gewicht eines Knotens v sei hierbei die Anzahl aller Knoten im Unterbaum mit der Wurzel v. Blattknoten sollen nicht ausgegeben werden. Verwenden Sie hierfür dieselben Datenstrukturen für einen binären Baum wie sie aus der Vorlesung bekannt sind.
+
+---
+
+```
+binaryWeights(tree):
+  if tree == nil:
+    return 0
+  weight := binaryWeights(tree.left) +
+    binaryWeights(tree.right) + 1
+  if weight > 1:
+    echo weight
+  return weight
+```
+
+# 30: Binary Tree Search
+
+Gegeben sei ein binärer Suchbaum für Werte zwischen 1 und 1000. In diesem Baum wird die Zahl 364 gesucht.
+
+1. Überprüfen Sie für die Folgen `1.` bis `4.`, ob die Elemente in der angegebenen Reihenfolge Werte von Knoten repräsentieren können, die bei der Suche im binären Suchbaum durchlaufen wurden.
+
+    1. `{900, 5, 765, 105, 764, 333, 357, 352}`
+    2. `{898, 56, 292, 740, 212, 555, 342, 344}`
+    3. `{999, 106, 897, 212, 295, 898, 605}`
+    4. `{8, 412, 411, 156, 259, 279, 294, 380, 360}`
+
+2. Schreiben Sie einen Algorithmus als Pseudocode, der dieses Problem im Allgemeinen löst, d.h. für beliebige Folgen, Obergrenzen, Untergrenzen und gesuchte Zahlen. Sie können von paarweise unterschiedlichen Werten und korrekten Eingaben ausgehen.
+
+---
+
+## a
+
+  1. Nein
+  2. Ja
+  3. Ja
+  4. Ja
+
+## b
+
+```
+checkSearch(list, min, max, search):
+  return checkSearch(list:search, min, max)
+
+checkSearch(list, min, max):
+  if list.length == 1:
+    return min <= list[0] and max >=list[0]
+  a = list[0]
+  b = list[1]
+  if a > b: #left subtree
+    return checkSearch(list[1..], min, a)
+  else if a < b: #right subtree
+    return checkSearch(list[1..], a, max)
+```
+
+# 31: AVL Trees
+
+1. Fügen Sie die Elemente der Folge `{20, 50, 70, 10, 40, 30, 60}` in dieser Reihenfolge in einen anfangs leeren AVL-Baum ein. Zeichnen Sie den AVLBaum jeweils vor und nach jeder Reorganisationsmaßnahme und geben Sie den endgültigen AVL-Baum an.
+
+2. Gegeben sei folgender AVL-Baum:
+
+```viz
+digraph avl {
+  20 -> 17;
+  20 -> 30;
+  17 -> 5;
+  17 -> 19;
+  19 -> 18;
+  5 -> 3;
+  5 -> 7;
+  7 -> 6;
+  30 -> 25;
+  30 -> 33;
+  25 -> 24;
+}
+```
+
+  Löschen Sie nun den Knoten mit Schlüssel 33 und führen Sie alle notwendigen Operationen durch, um nach der Entfernung dieses Knotens wieder einen gültigen AVLBaum zu erhalten.
+
+---
+
+## a
+
+```viz
+digraph avl {
+  20 -> 50;
+  50 -> 70;
+}
+```
+
+Balance:
+
+```viz
+digraph avl {
+  50 -> 20;
+  50 -> 70;
+}
+```
+
+```viz
+digraph avl {
+  50 -> 20;
+  50 -> 70;
+  20 -> 10;
+  20 -> 40;
+  40 -> 30;
+}
+```
+
+Balance:
+
+```viz
+digraph avl {
+  40 -> 20;
+  40 -> 50;
+  20 -> 10;
+  20 -> 30;
+  50 -> 70;
+}
+```
+
+```viz
+digraph avl {
+  40 -> 20;
+  40 -> 50;
+  20 -> 10;
+  20 -> 30;
+  50 -> 60;
+  50 -> 70;
+}
+```
+
+## b
+
+```viz
+digraph avl {
+  20 -> 17;
+  20 -> 30;
+  17 -> 5;
+  17 -> 19;
+  19 -> 18;
+  5 -> 3;
+  5 -> 7;
+  7 -> 6;
+  30 -> 25;
+  25 -> 24;
+}
+```
+
+```viz
+digraph avl {
+  20 -> 17;
+  20 -> 25;
+  17 -> 5;
+  17 -> 19;
+  19 -> 18;
+  5 -> 3;
+  5 -> 7;
+  7 -> 6;
+  25 -> 24;
+  25 -> 30;
+}
+```
+
+```viz
+digraph avl {
+  17 -> 5;
+  17 -> 20;
+  5 -> 3;
+  5 -> 7;
+  7 -> 6;
+  20 -> 19;
+  19 -> 18;
+  20 -> 25;
+  25 -> 24;
+  25 -> 30;
+}
+```
+
+# 32: B-Tree
+
+1. Fügen Sie die Elemente der Folge `{1, 3, 6, 8, 11, 14, 20, 40}` in dieser Reihenfolge in einen anfangs leeren B-Baum der Ordnung 3 ein. Zeichnen Sie den B-Baum jeweils vor und nach jeder Reorganisationsmaßnahme und geben Sie den endgültigen B-Baum an. Fügen Sie die Folge auch in einen binären Baum ein und vergleichen Sie beide Resultate.
+
+2. Geben Sie den B-Baum an, der durch Löschen der Schlüssel 11 und 8 (in dieser Reihenfolge) aus dem Baum von Punkt (a) entsteht.
+
+---
+
+## a
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |1|<f1> |3|<f2> |6|<f3>"];
+}
+```
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1> |8|<f2>"];
+"node0":f1 -> "node2"
+
+}
+```
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1> |8|<f2> |11|<f3>"];
+"node0":f1 -> "node2"
+
+}
+```
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1> |8|<f2>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1>"];
+"node0":f1 -> "node2"
+node3[label = "<f0> |11|<f1> |14|<f2>"];
+"node0":f2 -> "node3"
+
+}
+```
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1> |8|<f2>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1>"];
+"node0":f1 -> "node2"
+node3[label = "<f0> |11|<f1> |14|<f2> |20|<f3>"];
+"node0":f2 -> "node3"
+
+}
+```
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1> |8|<f2> |14|<f3>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1>"];
+"node0":f1 -> "node2"
+node3[label = "<f0> |11|<f1>"];
+"node0":f2 -> "node3"
+node4[label = "<f0> |20|<f1> |40|<f2>"];
+"node0":f3 -> "node4"
+
+}
+```
+
+## b
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1> |8|<f2> |20|<f3>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1>"];
+"node0":f1 -> "node2"
+node3[label = "<f0> |14|<f1>"];
+"node0":f2 -> "node3"
+node4[label = "<f0> |40|<f1>"];
+"node0":f3 -> "node4"
+
+}
+```
+
+```viz
+digraph g {
+node [shape = record,height=.1];
+node0[label = "<f0> |3|<f1> |14|<f2>"];
+node1[label = "<f0> |1|<f1>"];
+"node0":f0 -> "node1"
+node2[label = "<f0> |6|<f1>"];
+"node0":f1 -> "node2"
+node3[label = "<f0> |20|<f1> |40|<f2>"];
+"node0":f2 -> "node3"
+
+}
+```
