@@ -77,34 +77,34 @@ public class Network {
         status = Status.STARTED;
         while(!unvisited.isEmpty()) {
             Node start = unvisited.peek();
-            start.level = 0;
-            dfs(start);
+            start.depth = 0;
+            dfs(start, null);
             numComponents++;
         }
         status = Status.DONE;
     }
 
-    private void dfs(Node n) {
+    private void dfs(Node n, Node parent) {
         unvisited.remove(n);
         n.component = numComponents;
-        n.levelNew = n.level;
+        n.lowDepth = n.depth;
         int numSeparate = 0;
         for(Node m : n.adj) {
-            if(n.level > 0 && m.level == n.level-1) {
+            if(m == parent) {
                 continue;
             }
-            if(m.level == -1) {
-                m.level = n.level + 1;
-                dfs(m);
+            if(m.depth == -1) {
+                m.depth = n.depth + 1;
+                dfs(m, n);
             }
-            n.levelNew = Math.min(n.levelNew, m.levelNew);
-            if(m.levelNew > n.level) {
+            n.lowDepth = Math.min(n.lowDepth, m.lowDepth);
+            if(m.lowDepth > n.depth) {
                 numSeparate++;
             } else {
                 hasCycle = true;
             }
         }
-        if(n.level > 0 && n.levelNew >= n.level) {
+        if(n.depth > 0 && n.lowDepth >= n.depth) {
             numSeparate++;
         }
         if(numSeparate > 0 && n.adj.size() > 1) {
@@ -163,8 +163,8 @@ public class Network {
         Node endNode = nodes[end];
         if(startNode.component == -1) {
             status = Status.STARTED;
-            startNode.level = 0;
-            dfs(startNode);
+            startNode.depth = 0;
+            dfs(startNode, null);
             numComponents++;
         }
         if(startNode.component == endNode.component) {
@@ -188,16 +188,16 @@ public class Network {
         status = Status.INIT;
         unvisited = new LinkedList<>(Arrays.asList(nodes));
         for(Node n : nodes) {
-            n.level = -1;
-            n.levelNew = -1;
+            n.depth = -1;
+            n.lowDepth = -1;
             n.component = -1;
         }
     }
 
     private class Node {
         private final int id;
-        private int level;
-        private int levelNew;
+        private int depth;
+        private int lowDepth;
         private int component;
         private Set<Node> adj = new HashSet<>();
 
