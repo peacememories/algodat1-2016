@@ -85,7 +85,7 @@ public class Network {
         n.visited = true;
         n.component = numComponents;
         n.lowDepth = n.depth;
-        int numSeparate = 0;
+        int numSeparate = n.depth > 0 ? 1 : 0;
         for(Node m : n.adj) {
             if(m == parent) {
                 continue;
@@ -93,19 +93,17 @@ public class Network {
             if(!m.visited) {
                 m.depth = n.depth + 1;
                 dfs(m, n);
+                if(m.lowDepth >= n.depth) {
+                    numSeparate++;
+                }
             }
             n.lowDepth = Math.min(n.lowDepth, m.lowDepth);
-            if(m.lowDepth > n.depth) {
-                numSeparate++;
-            } else {
-                hasCycle = true;
-            }
         }
-        if(n.depth > 0 && n.lowDepth >= n.depth) {
-            numSeparate++;
-        }
-        if(numSeparate > 0 && n.adj.size() > 1) {
+        if(numSeparate > 1) {
             critical.add(n.id);
+        }
+        if(n.lowDepth < n.depth) {
+            hasCycle = true;
         }
     }
 
