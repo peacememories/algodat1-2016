@@ -15,9 +15,6 @@ public class Network {
 
     private Status status;
 
-
-    private Queue<Node> unvisited;
-
     public Network(int n) {
         numNodes = n;
         nodes = new Node[numNodes];
@@ -75,17 +72,17 @@ public class Network {
 
     private void tarjan() {
         status = Status.STARTED;
-        while(!unvisited.isEmpty()) {
-            Node start = unvisited.peek();
-            start.depth = 0;
-            dfs(start, null);
-            numComponents++;
+        for(Node n : nodes) {
+            if(!n.visited) {
+                dfs(n, null);
+                numComponents++;
+            }
         }
         status = Status.DONE;
     }
 
     private void dfs(Node n, Node parent) {
-        unvisited.remove(n);
+        n.visited = true;
         n.component = numComponents;
         n.lowDepth = n.depth;
         int numSeparate = 0;
@@ -93,7 +90,7 @@ public class Network {
             if(m == parent) {
                 continue;
             }
-            if(m.depth == -1) {
+            if(!m.visited) {
                 m.depth = n.depth + 1;
                 dfs(m, n);
             }
@@ -112,28 +109,28 @@ public class Network {
         }
     }
 
+    private class SearchNode {
+        private final Node node;
+        private final int depth;
+        private final Node parent;
+
+        public SearchNode(Node node, Node parent, int depth) {
+            this.node = node;
+            this.parent = parent;
+            this.depth = depth;
+        }
+    }
     private int pathsearch(Node start, Node end) {
-        Queue<Node> nq = new LinkedList<>();
-        Queue<Integer> dq = new LinkedList<>();
-        Set<Node> visited = new HashSet<>();
-        nq.add(start);
-        nq.add(null);
-        dq.add(0);
-        while(!nq.isEmpty()) {
-            Node n = nq.poll();
-            Node parent = nq.poll();
-            visited.add(n);
-            int depth = dq.poll();
-            for(Node m : n.adj) {
-                if(m == parent) {
-                    continue;
-                }
-                if(m == end) {
-                    return depth+1;
-                } else {
-                    nq.add(m);
-                    nq.add(n);
-                    dq.add(depth+1);
+        Queue<SearchNode> queue = new LinkedList<>();
+        queue.add(new SearchNode(start, null, 0));
+        while(!queue.isEmpty()) {
+            SearchNode sn = queue.poll();
+            if(sn.node == end) {
+                return sn.depth;
+            }
+            for(Node m : sn.node.adj) {
+                if(m != sn.parent) {
+                    queue.add(new SearchNode(m, sn.node, sn.depth+1));
                 }
             }
         }
@@ -163,7 +160,6 @@ public class Network {
         Node endNode = nodes[end];
         if(startNode.component == -1) {
             status = Status.STARTED;
-            startNode.depth = 0;
             dfs(startNode, null);
             numComponents++;
         }
@@ -186,10 +182,10 @@ public class Network {
         hasCycle = false;
         critical = new HashSet<>();
         status = Status.INIT;
-        unvisited = new LinkedList<>(Arrays.asList(nodes));
         for(Node n : nodes) {
-            n.depth = -1;
-            n.lowDepth = -1;
+            n.visited = false;
+            n.depth = 0;
+            n.lowDepth = 0;
             n.component = -1;
         }
     }
@@ -199,6 +195,7 @@ public class Network {
         private int depth;
         private int lowDepth;
         private int component;
+        private boolean visited;
         private Set<Node> adj = new HashSet<>();
 
         public Node(int id) {
