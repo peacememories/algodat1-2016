@@ -1,0 +1,7 @@
+nodes 5
+add
+0 1 2 3 4
+1 2
+3 4
+structure 6 1 true
+critical 0
